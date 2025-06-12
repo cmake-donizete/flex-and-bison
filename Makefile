@@ -1,10 +1,16 @@
 CFLAGS=-lfl
 
+flexes=$(wildcard *.l)
+
+all: $(flexes)
+
+.PHONY: all
+
+$(flexes): %.l: %.c
+	$(CC) $(CFLAGS) -o $*.exe $^
+
 %.c:
 	flex -o $*.c $*.l
-
-$(wildcard *.l): %.l: %.c
-	$(CC) $(CFLAGS) -o $*.exe $<
 
 clean:
 	rm *.c *.exe

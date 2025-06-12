@@ -1,5 +1,10 @@
-CC=gcc
-CFLAGS=-g -lfl
+CFLAGS=-lfl
 
-flex: $(wildcard *.l)
-	flex -o $?.yy.c $?
+%.c:
+	flex -o $*.c $*.l
+
+$(wildcard *.l): %.l: %.c
+	$(CC) $(CFLAGS) -o $*.exe $<
+
+clean:
+	rm *.c *.exe

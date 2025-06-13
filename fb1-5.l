@@ -4,6 +4,8 @@
 
 %%
 
+"(" { return OP;  }
+")" { return CP;  }
 "+" { return ADD; }
 "-" { return SUB; }
 "*" { return MUL; }

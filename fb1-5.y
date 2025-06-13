@@ -7,6 +7,7 @@
 %}
 
 %token NUMBER
+%token OP CP
 %token ADD SUB MUL DIV ABS
 %token EOL
 
@@ -27,7 +28,8 @@ factor: term
 ;
 
 term: NUMBER
-| ABS term { $$ = abs($2); }
+| ABS term { $$ = abs($2);  }
+| OP exp CP { $$ = $2;      }
 ;
 
 %%

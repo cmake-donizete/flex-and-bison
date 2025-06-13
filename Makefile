@@ -1,16 +1,23 @@
 CFLAGS=-lfl
 
-flexes=$(wildcard *.l)
+bisons=$(wildcard *.y)
+flexes=$(filter-out $(bisons:.y=.l),$(wildcard *.l))
 
-all: $(flexes)
+all: $(flexes) $(bisons)
 
 .PHONY: all
 
-$(flexes): %.l: %.c
+$(flexes): %.l: %.l.c
 	$(CC) $(CFLAGS) -o $*.exe $^
 
-%.c:
-	flex -o $*.c $*.l
+$(bisons): %.y: %.y.c %.l.c
+	$(CC) $(CFLAGS) -o $*.exe $*.y.c $*.l.c
+
+%.l.c:
+	flex -o $*.l.c $*.l
+
+%.y.c:
+	bison -o $*.y.c -d $*.y
 
 clean:
-	rm *.c *.exe
+	rm *.h *.c *.exe

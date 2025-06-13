@@ -12,6 +12,7 @@
 "/" { return DIV; }
 "|" { return ABS; }
 [0-9]+ { yylval = atoi(yytext); return NUMBER; }
+0x[a-fA-F0-9]+ { yylval = strtol(yytext, 0, 16); return NUMBER; }
 \n { return EOL; }
 [ \t] {  }
 . { printf("MISTERY: %s\n", yytext); }
